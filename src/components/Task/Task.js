@@ -1,4 +1,4 @@
-export default function TaskFunct({ label, creationTime, onDone }) {
+export default function TaskFunct({ label, creationTime, onDone, onDeleted }) {
   return (
     <div className="view" onClick={onDone}>
       <input className="toggle" type="checkbox" />
@@ -7,7 +7,7 @@ export default function TaskFunct({ label, creationTime, onDone }) {
         <span className="created">{creationTime}</span>
       </label>
       <button className="icon icon-edit"></button>
-      <button className="icon icon-destroy"></button>
+      <button className="icon icon-destroy" onClick={onDeleted}></button>
     </div>
   );
 }

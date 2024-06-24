@@ -53,6 +53,17 @@ export default function App() {
     });
   };
 
+  const handleDeleted = (id) => {
+    setTasks(({ todoData }) => {
+      let newArr = todoData.filter((el) => el.id !== id);
+
+      console.log(newArr);
+      console.log(todoData);
+
+      return { todoData: newArr };
+    });
+  };
+
   return (
     <>
       <header className="header">
@@ -60,7 +71,11 @@ export default function App() {
         <NewTaskForm />
       </header>
       <section className="main">
-        <TaskList todos={tasks.todoData} onDone={handleDone} />
+        <TaskList
+          todos={tasks.todoData}
+          onDone={handleDone}
+          onDeleted={handleDeleted}
+        />
         <Footer btn={buttons} />
       </section>
     </>
