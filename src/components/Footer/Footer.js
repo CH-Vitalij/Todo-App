@@ -5,7 +5,7 @@ export default function Footer({ btn, onSelect }) {
     const { id, ...elProps } = el;
     return (
       <li key={id}>
-        <TasksFilter {...elProps} onSelect={() => onSelect(id)} />
+        <TasksFilter {...elProps} onSelect={(name) => onSelect(name)} />
       </li>
     );
   });

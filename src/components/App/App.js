@@ -12,11 +12,13 @@ export default function App() {
 
   const [btns, setBtns] = useState({
     buttons: [
-      { id: crypto.randomUUID(), status: "selected", name: "All" },
-      { id: crypto.randomUUID(), status: null, name: "Active" },
-      { id: crypto.randomUUID(), status: null, name: "Completed" },
+      { id: crypto.randomUUID(), isActive: true, name: "All" },
+      { id: crypto.randomUUID(), isActive: false, name: "Active" },
+      { id: crypto.randomUUID(), isActive: false, name: "Completed" },
     ],
   });
+
+  const [currentFilter, setCurrentFilter] = useState("All");
 
   function createTask(label) {
     return {
@@ -61,19 +63,26 @@ export default function App() {
     });
   }
 
-  function handleSelect(id) {
-    setBtns(({ buttons }) => {
-      const newArr = buttons.map((el) => {
-        if (el.status) {
-          el = el.id === id ? { ...el, status: "selected" } : el;
-        }
-
-        return el;
-      });
-
-      return { buttons: newArr };
-    });
+  function handleSelected(name) {
+    setCurrentFilter(name);
+    setBtns(({ buttons }) => ({
+      buttons: buttons.map((el) => ({
+        ...el,
+        isActive: el.name === name,
+      })),
+    }));
   }
+
+  const getFilteredTasks = () => {
+    switch (currentFilter) {
+      case "Active":
+        return tasks.todoData.filter((task) => !task.done);
+      case "Completed":
+        return tasks.todoData.filter((task) => task.done);
+      default:
+        return tasks.todoData;
+    }
+  };
 
   return (
     <>
@@ -83,11 +92,11 @@ export default function App() {
       </header>
       <section className="main">
         <TaskList
-          todos={tasks.todoData}
+          todos={getFilteredTasks()}
           onDone={handleDone}
           onDeleted={handleDeleted}
         />
-        <Footer btn={btns.buttons} onSelect={handleSelect} />
+        <Footer btn={btns.buttons} onSelect={handleSelected} />
       </section>
     </>
   );

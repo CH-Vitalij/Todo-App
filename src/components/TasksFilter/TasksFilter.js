@@ -1,6 +1,12 @@
-export default function TasksFilter({ status, name, onSelect }) {
+export default function TasksFilter({ isActive, name, onSelect }) {
+  let className = "";
+
+  if (isActive) {
+    className += "selected";
+  }
+
   return (
-    <button className={status} onClick={onSelect}>
+    <button className={className} onClick={() => onSelect(name)}>
       {name}
     </button>
   );
