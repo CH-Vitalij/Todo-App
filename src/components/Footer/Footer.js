@@ -1,6 +1,6 @@
 import TasksFilter from "../TasksFilter";
 
-export default function Footer({ btn, onSelect }) {
+export default function Footer({ btn, onSelect, onClear }) {
   const elements = btn.map((el) => {
     const { id, ...elProps } = el;
     return (
@@ -16,7 +16,7 @@ export default function Footer({ btn, onSelect }) {
       <ul className="filters">{elements}</ul>
       <button
         className="clear-completed"
-        onClick={() => console.log("Clicked")}
+        onClick={() => onClear()}
       >
         Clear completed
       </button>

@@ -71,6 +71,14 @@ export default function App() {
     }));
   }
 
+  function handleClear() {
+    console.log(tasks.todoData);
+
+    setTasks(({ todoData }) => {
+      return { todoData: todoData.filter((el) => !el.done) };
+    });
+  }
+
   const getFilteredTasks = () => {
     switch (currentFilter) {
       case "Active":
@@ -94,7 +102,11 @@ export default function App() {
           onDone={handleDone}
           onDeleted={handleDeleted}
         />
-        <Footer btn={btns.buttons} onSelect={handleSelected} />
+        <Footer
+          btn={btns.buttons}
+          onSelect={handleSelected}
+          onClear={handleClear}
+        />
       </section>
     </>
   );

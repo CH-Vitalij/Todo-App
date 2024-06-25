@@ -6,7 +6,6 @@ export default function Task({
   onDone,
   onDeleted,
 }) {
-  console.log(done);
   return (
     <div className="view">
       <input
