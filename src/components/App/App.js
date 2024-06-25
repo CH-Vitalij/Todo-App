@@ -7,22 +7,22 @@ export default function App() {
   const [tasks, setTasks] = useState({
     todoData: [
       {
-        id: crypto.randomUUID(),
         status: "editing",
         label: "Editing task",
         creationTime: "created 5 minutes ago",
+        id: crypto.randomUUID(),
       },
       {
-        id: crypto.randomUUID(),
         status: null,
         label: "Active task",
         creationTime: "created 5 minutes ago",
+        id: crypto.randomUUID(),
       },
       {
-        id: crypto.randomUUID(),
         status: "completed",
         label: "Completed task",
         creationTime: "created 17 seconds ago",
+        id: crypto.randomUUID(),
       },
     ],
   });
@@ -33,11 +33,7 @@ export default function App() {
     { id: crypto.randomUUID(), type: "Completed" },
   ];
 
-  const handleDone = (id, evt) => {
-    if (!evt.target.matches(".toggle")) {
-      return null;
-    }
-
+  const handleDone = (id) => {
     setTasks(({ todoData }) => {
       const newArr = todoData.map((el) => {
         if (el.status === null) {

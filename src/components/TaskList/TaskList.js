@@ -2,14 +2,14 @@ import Task from "../Task";
 
 export default function TaskList({ todos, onDone, onDeleted }) {
   const elements = todos.map((el) => {
-    const { id, status, ...elProps } = el;
+    const { status, ...elProps } = el;
 
     return (
-      <li key={id} className={status}>
+      <li key={elProps.id} className={status}>
         <Task
           {...elProps}
-          onDone={(evt) => onDone(id, evt)}
-          onDeleted={() => onDeleted(id)}
+          onDone={() => onDone(elProps.id)}
+          onDeleted={() => onDeleted(elProps.id)}
         />
         <input type="text" className="edit" value="Editing task" />
       </li>

@@ -1,8 +1,8 @@
-export default function TaskFunct({ label, creationTime, onDone, onDeleted }) {
+export default function Task({ label, creationTime, id, onDone, onDeleted }) {
   return (
-    <div className="view" onClick={onDone}>
-      <input className="toggle" type="checkbox" />
-      <label>
+    <div className="view">
+      <input className="toggle" type="checkbox" id={id} onChange={onDone} />
+      <label htmlFor={id}>
         <span className="description">{label}</span>
         <span className="created">{creationTime}</span>
       </label>
