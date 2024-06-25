@@ -72,8 +72,6 @@ export default function App() {
   }
 
   function handleClear() {
-    console.log(tasks.todoData);
-
     setTasks(({ todoData }) => {
       return { todoData: todoData.filter((el) => !el.done) };
     });
