@@ -7,20 +7,22 @@ import { formatDistanceToNow } from "date-fns";
 
 export default function App() {
   const [tasks, setTasks] = useState({
-    todoData: [],
+    todoData: [createTask("Task1")],
   });
 
-  const buttons = [
-    { id: crypto.randomUUID(), status: "selected", type: "All" },
-    { id: crypto.randomUUID(), type: "Active" },
-    { id: crypto.randomUUID(), type: "Completed" },
-  ];
+  const [btns, setBtns] = useState({
+    buttons: [
+      { id: crypto.randomUUID(), status: "selected", name: "All" },
+      { id: crypto.randomUUID(), status: null, name: "Active" },
+      { id: crypto.randomUUID(), status: null, name: "Completed" },
+    ],
+  });
 
   function createTask(label) {
     return {
-      status: null,
       label,
       creationTime: formatDistanceToNow(Date.now(), { includeSeconds: true }),
+      done: false,
       id: crypto.randomUUID(),
     };
   }
@@ -42,11 +44,7 @@ export default function App() {
   function handleDone(id) {
     setTasks(({ todoData }) => {
       const newArr = todoData.map((el) => {
-        if (el.status === null) {
-          el = el.id === id ? { ...el, status: "completed" } : el;
-        } else if (el.status === "completed") {
-          el = el.id === id ? { ...el, status: null } : el;
-        }
+        el = el.id === id ? { ...el, done: !el.done } : el;
 
         return el;
       });
@@ -63,6 +61,20 @@ export default function App() {
     });
   }
 
+  function handleSelect(id) {
+    setBtns(({ buttons }) => {
+      const newArr = buttons.map((el) => {
+        if (el.status) {
+          el = el.id === id ? { ...el, status: "selected" } : el;
+        }
+
+        return el;
+      });
+
+      return { buttons: newArr };
+    });
+  }
+
   return (
     <>
       <header className="header">
@@ -75,7 +87,7 @@ export default function App() {
           onDone={handleDone}
           onDeleted={handleDeleted}
         />
-        <Footer btn={buttons} />
+        <Footer btn={btns.buttons} onSelect={handleSelect} />
       </section>
     </>
   );

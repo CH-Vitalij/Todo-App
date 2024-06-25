@@ -1,11 +1,11 @@
 import TasksFilter from "../TasksFilter";
 
-export default function Footer({ btn }) {
+export default function Footer({ btn, onSelect }) {
   const elements = btn.map((el) => {
     const { id, ...elProps } = el;
     return (
       <li key={id}>
-        <TasksFilter {...elProps} />
+        <TasksFilter {...elProps} onSelect={() => onSelect(id)} />
       </li>
     );
   });
