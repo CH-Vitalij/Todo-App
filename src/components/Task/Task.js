@@ -4,7 +4,7 @@ export default function Task({ label, creationTime, id, onDone, onDeleted }) {
       <input className="toggle" type="checkbox" id={id} onChange={onDone} />
       <label htmlFor={id}>
         <span className="description">{label}</span>
-        <span className="created">{creationTime}</span>
+        <span className="created">{`created ${creationTime} ago`}</span>
       </label>
       <button className="icon icon-edit"></button>
       <button className="icon icon-destroy" onClick={onDeleted}></button>

@@ -3,28 +3,11 @@ import NewTaskForm from "../NewTaskForm";
 import TaskList from "../TaskList";
 import Footer from "../Footer";
 
+import { formatDistanceToNow } from "date-fns";
+
 export default function App() {
   const [tasks, setTasks] = useState({
-    todoData: [
-      {
-        status: "editing",
-        label: "Editing task",
-        creationTime: "created 5 minutes ago",
-        id: crypto.randomUUID(),
-      },
-      {
-        status: null,
-        label: "Active task",
-        creationTime: "created 5 minutes ago",
-        id: crypto.randomUUID(),
-      },
-      {
-        status: "completed",
-        label: "Completed task",
-        creationTime: "created 17 seconds ago",
-        id: crypto.randomUUID(),
-      },
-    ],
+    todoData: [],
   });
 
   const buttons = [
@@ -33,7 +16,30 @@ export default function App() {
     { id: crypto.randomUUID(), type: "Completed" },
   ];
 
-  const handleDone = (id) => {
+  function createTask(label) {
+    return {
+      status: null,
+      label,
+      creationTime: formatDistanceToNow(Date.now(), { includeSeconds: true }),
+      id: crypto.randomUUID(),
+    };
+  }
+
+  function handleAdded(text) {
+    const newTask = createTask(text);
+
+    setTasks(({ todoData }) => {
+      const newArr = structuredClone(todoData);
+
+      newArr.push(newTask);
+
+      return {
+        todoData: newArr,
+      };
+    });
+  }
+
+  function handleDone(id) {
     setTasks(({ todoData }) => {
       const newArr = todoData.map((el) => {
         if (el.status === null) {
@@ -47,24 +53,21 @@ export default function App() {
 
       return { todoData: newArr };
     });
-  };
+  }
 
-  const handleDeleted = (id) => {
+  function handleDeleted(id) {
     setTasks(({ todoData }) => {
-      let newArr = todoData.filter((el) => el.id !== id);
-
-      console.log(newArr);
-      console.log(todoData);
+      const newArr = todoData.filter((el) => el.id !== id);
 
       return { todoData: newArr };
     });
-  };
+  }
 
   return (
     <>
       <header className="header">
         <h1>todos</h1>
-        <NewTaskForm />
+        <NewTaskForm onAdded={handleAdded} />
       </header>
       <section className="main">
         <TaskList

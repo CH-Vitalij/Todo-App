@@ -11,7 +11,7 @@ export default function TaskList({ todos, onDone, onDeleted }) {
           onDone={() => onDone(elProps.id)}
           onDeleted={() => onDeleted(elProps.id)}
         />
-        <input type="text" className="edit" value="Editing task" />
+        {/* <input type="text" className="edit" value="Editing task" /> */}
       </li>
     );
   });
