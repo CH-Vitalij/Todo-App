@@ -45,30 +45,28 @@ export default function App() {
 
   function handleDone(id) {
     setTasks(({ todoData }) => {
-      const newArr = todoData.map((el) => {
-        el = el.id === id ? { ...el, done: !el.done } : el;
+      return {
+        todoData: todoData.map((task) => {
+          task = task.id === id ? { ...task, done: !task.done } : task;
 
-        return el;
-      });
-
-      return { todoData: newArr };
+          return task;
+        }),
+      };
     });
   }
 
   function handleDeleted(id) {
     setTasks(({ todoData }) => {
-      const newArr = todoData.filter((el) => el.id !== id);
-
-      return { todoData: newArr };
+      return { todoData: todoData.filter((task) => task.id !== id) };
     });
   }
 
   function handleSelected(name) {
     setCurrentFilter(name);
     setBtns(({ buttons }) => ({
-      buttons: buttons.map((el) => ({
-        ...el,
-        isActive: el.name === name,
+      buttons: buttons.map((btn) => ({
+        ...btn,
+        isActive: btn.name === name,
       })),
     }));
   }

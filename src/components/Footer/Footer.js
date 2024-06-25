@@ -14,7 +14,12 @@ export default function Footer({ btn, onSelect }) {
     <footer className="footer">
       <span className="todo-count">1 items left</span>
       <ul className="filters">{elements}</ul>
-      <button className="clear-completed">Clear completed</button>
+      <button
+        className="clear-completed"
+        onClick={() => console.log("Clicked")}
+      >
+        Clear completed
+      </button>
     </footer>
   );
 }
