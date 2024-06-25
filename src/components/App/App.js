@@ -7,7 +7,7 @@ import { formatDistanceToNow } from "date-fns";
 
 export default function App() {
   const [tasks, setTasks] = useState({
-    todoData: [createTask("Task1")],
+    todoData: [],
   });
 
   const [btns, setBtns] = useState({
@@ -104,6 +104,7 @@ export default function App() {
         />
         <Footer
           btn={btns.buttons}
+          active={tasks.todoData.filter((task) => !task.done)}
           onSelect={handleSelected}
           onClear={handleClear}
         />
