@@ -1,8 +1,21 @@
 import Task from "../Task";
 import { Component } from "react";
+import PropTypes from "prop-types";
 
 export default class TaskList extends Component {
   state = { label: "" };
+
+  static defaultProps = {
+    todos: [],
+  };
+
+  static propTypes = {
+    todos: PropTypes.arrayOf(PropTypes.object),
+    onDone: PropTypes.func.isRequired,
+    onDeleted: PropTypes.func.isRequired,
+    onEdited: PropTypes.func.isRequired,
+    onSetLabelChange: PropTypes.func.isRequired,
+  };
 
   handleLabelChange = (evt) => {
     this.setState({ label: evt.target.value });

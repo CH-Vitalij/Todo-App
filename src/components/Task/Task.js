@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 export default function Task({
   label,
   creationTime,
@@ -25,3 +27,13 @@ export default function Task({
     </div>
   );
 }
+
+Task.propTypes = {
+  label: PropTypes.string.isRequired,
+  creationTime: PropTypes.string.isRequired,
+  done: PropTypes.bool.isRequired,
+  id: PropTypes.string.isRequired,
+  onDone: PropTypes.func,
+  onDeleted: PropTypes.func,
+  onEdited: PropTypes.func,
+};

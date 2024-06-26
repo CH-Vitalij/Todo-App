@@ -1,7 +1,12 @@
 import { Component } from "react";
+import PropTypes from "prop-types";
 
 export default class NewTaskForm extends Component {
   state = { label: "" };
+
+  static propTypes = {
+    onAdded: PropTypes.func.isRequired,
+  };
 
   handleLabelChange = (evt) => {
     this.setState({ label: evt.target.value });

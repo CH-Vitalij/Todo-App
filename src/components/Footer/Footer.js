@@ -1,4 +1,5 @@
 import TasksFilter from "../TasksFilter";
+import PropTypes from "prop-types";
 
 export default function Footer({ btn, active, onSelect, onClear }) {
   const elements = btn.map((el) => {
@@ -20,3 +21,10 @@ export default function Footer({ btn, active, onSelect, onClear }) {
     </footer>
   );
 }
+
+Footer.propTypes = {
+  btn: PropTypes.arrayOf(PropTypes.object).isRequired,
+  active: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onSelect: PropTypes.func.isRequired,
+  onClear: PropTypes.func.isRequired,
+};
