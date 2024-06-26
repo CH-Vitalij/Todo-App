@@ -1,27 +1,29 @@
-import { useState } from "react";
+import { Component } from "react";
 
-export default function NewTaskForm({ onAdded }) {
-  const [task, setTask] = useState({ label: "" });
+export default class NewTaskForm extends Component {
+  state = { label: "" };
 
-  const handleLabelChange = (evt) => {
-    setTask({ label: evt.target.value });
+  handleLabelChange = (evt) => {
+    this.setState({ label: evt.target.value });
   };
 
-  const handleSubmit = (evt) => {
+  handleSubmit = (evt) => {
     if (evt.keyCode === 13) {
-      onAdded(task.label);
-      setTask({ label: "" });
+      this.props.onAdded(this.state.label);
+      this.setState({ label: "" });
     }
   };
 
-  return (
-    <input
-      className="new-todo"
-      placeholder="What needs to be done?"
-      autoFocus
-      onChange={handleLabelChange}
-      onKeyDown={handleSubmit}
-      value={task.label}
-    />
-  );
+  render() {
+    return (
+      <input
+        className="new-todo"
+        placeholder="What needs to be done?"
+        autoFocus
+        onChange={this.handleLabelChange}
+        onKeyDown={this.handleSubmit}
+        value={this.state.label}
+      />
+    );
+  }
 }
