@@ -16,7 +16,9 @@ export default class TaskList extends Component {
   };
 
   render() {
-    const elements = this.props.todos.map((el) => {
+    const { todos, onDone, onDeleted, onEdited } = this.props;
+
+    const elements = todos.map((el) => {
       const { ...elProps } = el;
 
       let className = "";
@@ -31,9 +33,9 @@ export default class TaskList extends Component {
         <li key={elProps.id} className={className}>
           <Task
             {...elProps}
-            onDone={() => this.props.onDone(elProps.id)}
-            onDeleted={() => this.props.onDeleted(elProps.id)}
-            onEdited={() => this.props.onEdited(elProps.id)}
+            onDone={() => onDone(elProps.id)}
+            onDeleted={() => onDeleted(elProps.id)}
+            onEdited={() => onEdited(elProps.id)}
           />
           <input
             type="text"
