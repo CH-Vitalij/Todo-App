@@ -21,6 +21,7 @@ export default class App extends Component {
       label,
       creationTime: formatDistanceToNow(Date.now(), { includeSeconds: true }),
       done: false,
+      edit: false,
       id: crypto.randomUUID(),
     };
   };
@@ -71,6 +72,30 @@ export default class App extends Component {
     });
   };
 
+  handleEdited = (id) => {
+    this.setState(({ todoData }) => {
+      return {
+        todoData: todoData.map((task) => {
+          task = task.id === id ? { ...task, edit: !task.edit } : task;
+
+          return task;
+        }),
+      };
+    });
+  };
+
+  handleSetLabelChange = (id, newLabel) => {
+    this.setState(({ todoData }) => {
+      return {
+        todoData: todoData.map((task) => {
+          task = task.id === id ? { ...task, label: newLabel } : task;
+
+          return task;
+        }),
+      };
+    });
+  };
+
   getFilteredTasks = () => {
     switch (this.state.status) {
       case "Active":
@@ -94,6 +119,8 @@ export default class App extends Component {
             todos={this.getFilteredTasks()}
             onDone={this.handleDone}
             onDeleted={this.handleDeleted}
+            onEdited={this.handleEdited}
+            onSetLabelChange={this.handleSetLabelChange}
           />
           <Footer
             btn={this.state.buttons}

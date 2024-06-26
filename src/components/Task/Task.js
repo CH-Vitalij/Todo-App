@@ -5,6 +5,7 @@ export default function Task({
   id,
   onDone,
   onDeleted,
+  onEdited,
 }) {
   return (
     <div className="view">
@@ -19,7 +20,7 @@ export default function Task({
         <span className="description">{label}</span>
         <span className="created">{`created ${creationTime} ago`}</span>
       </label>
-      <button className="icon icon-edit"></button>
+      <button className="icon icon-edit" onClick={onEdited}></button>
       <button className="icon icon-destroy" onClick={onDeleted}></button>
     </div>
   );

@@ -1,26 +1,52 @@
 import Task from "../Task";
+import { Component } from "react";
 
-export default function TaskList({ todos, onDone, onDeleted }) {
-  const elements = todos.map((el) => {
-    const { ...elProps } = el;
+export default class TaskList extends Component {
+  state = { label: "" };
 
-    let className = "";
+  handleLabelChange = (evt) => {
+    this.setState({ label: evt.target.value });
+  };
 
-    if (elProps.done) {
-      className += "completed";
+  handleSubmit = (evt, id) => {
+    if (evt.keyCode === 13) {
+      this.props.onEdited(id);
+      this.props.onSetLabelChange(id, this.state.label);
     }
+  };
 
-    return (
-      <li key={elProps.id} className={className}>
-        <Task
-          {...elProps}
-          onDone={() => onDone(elProps.id)}
-          onDeleted={() => onDeleted(elProps.id)}
-        />
-        {/* <input type="text" className="edit" value="Editing task" /> */}
-      </li>
-    );
-  });
+  render() {
+    const elements = this.props.todos.map((el) => {
+      const { ...elProps } = el;
 
-  return <ul className="todo-list">{elements}</ul>;
+      let className = "";
+
+      if (elProps.done) {
+        className += "completed";
+      } else if (elProps.edit) {
+        className += "editing";
+      }
+
+      return (
+        <li key={elProps.id} className={className}>
+          <Task
+            {...elProps}
+            onDone={() => this.props.onDone(elProps.id)}
+            onDeleted={() => this.props.onDeleted(elProps.id)}
+            onEdited={() => this.props.onEdited(elProps.id)}
+          />
+          <input
+            type="text"
+            className="edit"
+            placeholder="Editing task"
+            onChange={this.handleLabelChange}
+            onKeyDown={(evt) => this.handleSubmit(evt, elProps.id)}
+            value={this.state.label}
+          />
+        </li>
+      );
+    });
+
+    return <ul className="todo-list">{elements}</ul>;
+  }
 }
