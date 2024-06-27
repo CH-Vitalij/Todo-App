@@ -19,7 +19,6 @@ export default class App extends Component {
   createTask = (label) => {
     return {
       label,
-      // creationTime: formatDistanceToNow(Date.now(), { includeSeconds: true }),
       creationTime: new Date(),
       done: false,
       edit: false,

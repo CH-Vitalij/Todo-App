@@ -38,9 +38,6 @@ export default class Task extends Component {
   }
 
   tick() {
-    console.log(
-      formatDistanceToNow(this.props.creationTime, { includeSeconds: true })
-    );
     this.setState({
       date: formatDistanceToNow(this.props.creationTime, {
         includeSeconds: true,
