@@ -4,6 +4,10 @@ import PropTypes from "prop-types";
 export default class NewTaskForm extends Component {
   state = { label: "" };
 
+  static defaultProps = {
+    onAdded: () => {},
+  }
+
   static propTypes = {
     onAdded: PropTypes.func.isRequired,
   };

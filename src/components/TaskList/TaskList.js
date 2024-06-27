@@ -7,6 +7,10 @@ export default class TaskList extends Component {
 
   static defaultProps = {
     todos: [],
+    onDone: () => {},
+    onDeleted: () => {},
+    onEdited: () => {},
+    onSetLabelChange: () => {},
   };
 
   static propTypes = {
@@ -25,6 +29,7 @@ export default class TaskList extends Component {
     if (evt.keyCode === 13) {
       this.props.onEdited(id);
       this.props.onSetLabelChange(id, this.state.label);
+      this.setState({ label: "" });
     }
   };
 

@@ -1,7 +1,12 @@
 import TasksFilter from "../TasksFilter";
 import PropTypes from "prop-types";
 
-export default function Footer({ btn, active, onSelect, onClear }) {
+export default function Footer({
+  btn = [],
+  active = [],
+  onSelect = () => {},
+  onClear = () => {},
+}) {
   const elements = btn.map((el) => {
     const { id, ...elProps } = el;
     return (

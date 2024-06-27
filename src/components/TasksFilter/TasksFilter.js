@@ -1,6 +1,10 @@
 import PropTypes from "prop-types";
 
-export default function TasksFilter({ isActive, name, onSelect }) {
+export default function TasksFilter({
+  isActive = true,
+  name = "",
+  onSelect = () => {},
+}) {
   let className = "";
 
   if (isActive) {

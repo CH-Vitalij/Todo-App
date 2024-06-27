@@ -1,13 +1,13 @@
 import PropTypes from "prop-types";
 
 export default function Task({
-  label,
-  creationTime,
-  done,
-  id,
-  onDone,
-  onDeleted,
-  onEdited,
+  label = "",
+  creationTime = "",
+  done = false,
+  id = "",
+  onDone = () => {},
+  onDeleted = () => {},
+  onEdited = () => {},
 }) {
   return (
     <div className="view">

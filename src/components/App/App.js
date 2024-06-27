@@ -85,15 +85,17 @@ export default class App extends Component {
   };
 
   handleSetLabelChange = (id, newLabel) => {
-    this.setState(({ todoData }) => {
-      return {
-        todoData: todoData.map((task) => {
-          task = task.id === id ? { ...task, label: newLabel } : task;
+    if (newLabel !== "") {
+      this.setState(({ todoData }) => {
+        return {
+          todoData: todoData.map((task) => {
+            task = task.id === id ? { ...task, label: newLabel } : task;
 
-          return task;
-        }),
-      };
-    });
+            return task;
+          }),
+        };
+      });
+    }
   };
 
   getFilteredTasks = () => {
