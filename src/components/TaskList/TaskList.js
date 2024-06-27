@@ -1,72 +1,60 @@
 import Task from "../Task";
-import { Component } from "react";
 import PropTypes from "prop-types";
 
-export default class TaskList extends Component {
-  state = { label: "" };
-
-  static defaultProps = {
-    todos: [],
-    onDone: () => {},
-    onDeleted: () => {},
-    onEdited: () => {},
-    onSetLabelChange: () => {},
+export default function TaskList({
+  todos = [],
+  onDone = () => {},
+  onDeleted = () => {},
+  onEdited = () => {},
+}) {
+  const handleLabelChange = (evt, id) => {
+    this.props.onSetLabelChange(id, evt.target.value);
   };
 
-  static propTypes = {
-    todos: PropTypes.arrayOf(PropTypes.object),
-    onDone: PropTypes.func.isRequired,
-    onDeleted: PropTypes.func.isRequired,
-    onEdited: PropTypes.func.isRequired,
-    onSetLabelChange: PropTypes.func.isRequired,
-  };
-
-  handleLabelChange = (evt) => {
-    this.setState({ label: evt.target.value });
-  };
-
-  handleSubmit = (evt, id) => {
+  const handleSubmit = (evt, id) => {
     if (evt.keyCode === 13) {
       this.props.onEdited(id);
-      this.props.onSetLabelChange(id, this.state.label);
-      this.setState({ label: "" });
     }
   };
 
-  render() {
-    const { todos, onDone, onDeleted, onEdited } = this.props;
+  const elements = todos.map((el) => {
+    const { ...elProps } = el;
 
-    const elements = todos.map((el) => {
-      const { ...elProps } = el;
+    let className = "";
 
-      let className = "";
+    if (elProps.done) {
+      className += "completed";
+    } else if (elProps.edit) {
+      className += "editing";
+    }
 
-      if (elProps.done) {
-        className += "completed";
-      } else if (elProps.edit) {
-        className += "editing";
-      }
+    return (
+      <li key={elProps.id} className={className}>
+        <Task
+          {...elProps}
+          onDone={() => onDone(elProps.id)}
+          onDeleted={() => onDeleted(elProps.id)}
+          onEdited={() => onEdited(elProps.id)}
+        />
+        <input
+          type="text"
+          className="edit"
+          placeholder="Editing task"
+          onChange={(evt) => handleLabelChange(evt, elProps.id)}
+          onKeyDown={(evt) => handleSubmit(evt, elProps.id)}
+          value={elProps.label}
+        />
+      </li>
+    );
+  });
 
-      return (
-        <li key={elProps.id} className={className}>
-          <Task
-            {...elProps}
-            onDone={() => onDone(elProps.id)}
-            onDeleted={() => onDeleted(elProps.id)}
-            onEdited={() => onEdited(elProps.id)}
-          />
-          <input
-            type="text"
-            className="edit"
-            placeholder="Editing task"
-            onChange={this.handleLabelChange}
-            onKeyDown={(evt) => this.handleSubmit(evt, elProps.id)}
-            value={this.state.label}
-          />
-        </li>
-      );
-    });
-
-    return <ul className="todo-list">{elements}</ul>;
-  }
+  return <ul className="todo-list">{elements}</ul>;
 }
+
+Task.propTypes = {
+  todos: PropTypes.arrayOf(PropTypes.object),
+  onDone: PropTypes.func.isRequired,
+  onDeleted: PropTypes.func.isRequired,
+  onEdited: PropTypes.func.isRequired,
+  onSetLabelChange: PropTypes.func.isRequired,
+};

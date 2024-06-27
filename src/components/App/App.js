@@ -72,6 +72,18 @@ export default class App extends Component {
     });
   };
 
+  handleSetLabelChange = (id, value) => {
+    this.setState(({ todoData }) => {
+      return {
+        todoData: todoData.map((task) => {
+          task = task.id === id ? { ...task, label: value } : task;
+
+          return task;
+        }),
+      };
+    });
+  };
+
   handleEdited = (id) => {
     this.setState(({ todoData }) => {
       return {
@@ -84,19 +96,19 @@ export default class App extends Component {
     });
   };
 
-  handleSetLabelChange = (id, newLabel) => {
-    if (newLabel !== "") {
-      this.setState(({ todoData }) => {
-        return {
-          todoData: todoData.map((task) => {
-            task = task.id === id ? { ...task, label: newLabel } : task;
+  // handleSetLabelChange = (id, newLabel) => {
+  //   if (newLabel !== "") {
+  //     this.setState(({ todoData }) => {
+  //       return {
+  //         todoData: todoData.map((task) => {
+  //           task = task.id === id ? { ...task, label: newLabel } : task;
 
-            return task;
-          }),
-        };
-      });
-    }
-  };
+  //           return task;
+  //         }),
+  //       };
+  //     });
+  //   }
+  // };
 
   getFilteredTasks = () => {
     switch (this.state.status) {
