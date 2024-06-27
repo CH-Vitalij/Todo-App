@@ -84,15 +84,24 @@ export default class App extends Component {
     });
   };
 
-  handleEdited = (id) => {
+  handleEdited = (id, ok = false) => {
     this.setState(({ todoData }) => {
-      return {
-        todoData: todoData.map((task) => {
-          task = task.id === id ? { ...task, edit: !task.edit } : task;
+      if (!ok) {
+        return {
+          todoData: todoData.map((task) => ({
+            ...task,
+            edit: task.id === id,
+          })),
+        };
+      } else {
+        return {
+          todoData: todoData.map((task) => {
+            task = task.id === id ? { ...task, edit: !task.edit } : task;
 
-          return task;
-        }),
-      };
+            return task;
+          }),
+        };
+      }
     });
   };
 
