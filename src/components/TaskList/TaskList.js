@@ -6,14 +6,15 @@ export default function TaskList({
   onDone = () => {},
   onDeleted = () => {},
   onEdited = () => {},
+  onSetLabelChange = () => {},
 }) {
   const handleLabelChange = (evt, id) => {
-    this.props.onSetLabelChange(id, evt.target.value);
+    onSetLabelChange(id, evt.target.value);
   };
 
   const handleSubmit = (evt, id) => {
     if (evt.keyCode === 13) {
-      this.props.onEdited(id);
+      onEdited(id);
     }
   };
 
@@ -51,7 +52,7 @@ export default function TaskList({
   return <ul className="todo-list">{elements}</ul>;
 }
 
-Task.propTypes = {
+TaskList.propTypes = {
   todos: PropTypes.arrayOf(PropTypes.object),
   onDone: PropTypes.func.isRequired,
   onDeleted: PropTypes.func.isRequired,

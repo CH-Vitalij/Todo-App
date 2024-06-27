@@ -96,20 +96,6 @@ export default class App extends Component {
     });
   };
 
-  // handleSetLabelChange = (id, newLabel) => {
-  //   if (newLabel !== "") {
-  //     this.setState(({ todoData }) => {
-  //       return {
-  //         todoData: todoData.map((task) => {
-  //           task = task.id === id ? { ...task, label: newLabel } : task;
-
-  //           return task;
-  //         }),
-  //       };
-  //     });
-  //   }
-  // };
-
   getFilteredTasks = () => {
     switch (this.state.status) {
       case "Active":
