@@ -1,5 +1,6 @@
-import Task from "../Task";
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
+
+import Task from '../Task';
 
 export default function TaskList({
   todos = [],
@@ -21,12 +22,12 @@ export default function TaskList({
   const elements = todos.map((el) => {
     const { ...elProps } = el;
 
-    let className = "";
+    let className = '';
 
     if (elProps.done) {
-      className += "completed";
+      className += 'completed';
     } else if (elProps.edit) {
-      className += "editing";
+      className += 'editing';
     }
 
     return (

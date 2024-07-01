@@ -1,11 +1,11 @@
-import PropTypes from "prop-types";
-import { formatDistanceToNow } from "date-fns";
+import PropTypes from 'prop-types';
+import { formatDistanceToNow } from 'date-fns';
 
 export default function Task({
-  label = "",
+  label = '',
   creationTime = new Date(),
   done = false,
-  id = "",
+  id = '',
   onDone = () => {},
   onDeleted = () => {},
   onEdited = () => {},
@@ -17,13 +17,7 @@ export default function Task({
 
   return (
     <div className="view">
-      <input
-        className="toggle"
-        type="checkbox"
-        id={id}
-        onChange={onDone}
-        checked={done}
-      />
+      <input className="toggle" type="checkbox" id={id} onChange={onDone} checked={done} />
       <label htmlFor={id}>
         <span className="description">{label}</span>
         <span className="created">{`created ${formattedDate}`}</span>

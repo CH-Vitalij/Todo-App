@@ -1,12 +1,12 @@
-import { Component } from "react";
-import PropTypes from "prop-types";
+import { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class NewTaskForm extends Component {
-  state = { label: "" };
+  state = { label: '' };
 
   static defaultProps = {
     onAdded: () => {},
-  }
+  };
 
   static propTypes = {
     onAdded: PropTypes.func.isRequired,
@@ -19,7 +19,7 @@ export default class NewTaskForm extends Component {
   handleSubmit = (evt) => {
     if (evt.keyCode === 13) {
       this.props.onAdded(this.state.label);
-      this.setState({ label: "" });
+      this.setState({ label: '' });
     }
   };
 

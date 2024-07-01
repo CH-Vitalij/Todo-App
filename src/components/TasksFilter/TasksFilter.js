@@ -1,14 +1,10 @@
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
-export default function TasksFilter({
-  isActive = true,
-  name = "",
-  onSelect = () => {},
-}) {
-  let className = "";
+export default function TasksFilter({ isActive = true, name = '', onSelect = () => {} }) {
+  let className = '';
 
   if (isActive) {
-    className += "selected";
+    className += 'selected';
   }
 
   return (

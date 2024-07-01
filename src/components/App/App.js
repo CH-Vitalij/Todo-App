@@ -1,19 +1,18 @@
-import { Component } from "react";
-import NewTaskForm from "../NewTaskForm";
-import TaskList from "../TaskList";
-import Footer from "../Footer";
+import { Component } from 'react';
 
-import { formatDistanceToNow } from "date-fns";
+import NewTaskForm from '../NewTaskForm';
+import TaskList from '../TaskList';
+import Footer from '../Footer';
 
 export default class App extends Component {
   state = {
     todoData: [],
     buttons: [
-      { id: crypto.randomUUID(), isActive: true, name: "All" },
-      { id: crypto.randomUUID(), isActive: false, name: "Active" },
-      { id: crypto.randomUUID(), isActive: false, name: "Completed" },
+      { id: crypto.randomUUID(), isActive: true, name: 'All' },
+      { id: crypto.randomUUID(), isActive: false, name: 'Active' },
+      { id: crypto.randomUUID(), isActive: false, name: 'Completed' },
     ],
-    status: "All",
+    status: 'All',
   };
 
   createTask = (label) => {
@@ -107,9 +106,9 @@ export default class App extends Component {
 
   getFilteredTasks = () => {
     switch (this.state.status) {
-      case "Active":
+      case 'Active':
         return this.state.todoData.filter((task) => !task.done);
-      case "Completed":
+      case 'Completed':
         return this.state.todoData.filter((task) => task.done);
       default:
         return this.state.todoData;
