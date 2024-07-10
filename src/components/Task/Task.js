@@ -19,8 +19,12 @@ export default function Task({
     <div className="view">
       <input className="toggle" type="checkbox" id={id} onChange={onDone} checked={done} />
       <label htmlFor={id}>
-        <span className="description">{label}</span>
-        <span className="created">{`created ${formattedDate}`}</span>
+        <span className="title">{label}</span>
+        <span className="description">
+          <button className="icon icon-play"></button>
+          <button className="icon icon-pause"></button>
+        </span>
+        <span className="description">{`created ${formattedDate}`}</span>
       </label>
       <button className="icon icon-edit" onClick={onEdited}></button>
       <button className="icon icon-destroy" onClick={onDeleted}></button>
