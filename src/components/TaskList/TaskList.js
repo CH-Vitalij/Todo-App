@@ -14,7 +14,7 @@ export default function TaskList({
   };
 
   const handleSubmit = (evt, id) => {
-    if (evt.keyCode === 13) {
+    if (evt.keyCode === 13 || evt.keyCode == 27) {
       onEdited(id, true);
     }
   };
@@ -36,12 +36,20 @@ export default function TaskList({
           {...elProps}
           onDone={() => onDone(elProps.id)}
           onDeleted={() => onDeleted(elProps.id)}
-          onEdited={() => onEdited(elProps.id)}
+          onEdited={(id) => {
+            const inputEdit = document.querySelector(`input.edit[data-id="${id}"]`);
+            if (inputEdit) {
+              setTimeout(() => {
+                inputEdit.focus();
+              }, 0);
+            }
+            onEdited(elProps.id);
+          }}
         />
         <input
           type="text"
           className="edit"
-          placeholder="Editing task"
+          data-id={elProps.id}
           onChange={(evt) => handleLabelChange(evt, elProps.id)}
           onKeyDown={(evt) => handleSubmit(evt, elProps.id)}
           value={elProps.label}

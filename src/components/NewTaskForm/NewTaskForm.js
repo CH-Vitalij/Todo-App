@@ -34,8 +34,8 @@ export default class NewTaskForm extends Component {
           onKeyDown={this.handleSubmit}
           value={this.state.label}
         />
-        <input className="new-todo-form__timer" placeholder="Min" autoFocus />
-        <input className="new-todo-form__timer" placeholder="Sec" autoFocus />
+        <input className="new-todo-form__timer" placeholder="Min" />
+        <input className="new-todo-form__timer" placeholder="Sec" />
       </form>
     );
   }

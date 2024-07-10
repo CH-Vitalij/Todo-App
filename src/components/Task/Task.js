@@ -26,7 +26,7 @@ export default function Task({
         </span>
         <span className="description">{`created ${formattedDate}`}</span>
       </label>
-      <button className="icon icon-edit" onClick={onEdited}></button>
+      <button className="icon icon-edit" id={id} onClick={() => onEdited(id)}></button>
       <button className="icon icon-destroy" onClick={onDeleted}></button>
     </div>
   );
