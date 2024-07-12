@@ -8,7 +8,7 @@ export default class Task extends Component {
     creationTime: new Date(),
     done: false,
     id: '',
-    timer: 0,
+    timer: null,
     onDone: () => {},
     onDeleted: () => {},
     onEdited: () => {},
@@ -45,8 +45,15 @@ export default class Task extends Component {
     }
   };
 
+  componentDidUpdate(prevProps) {
+    if (this.props.timer === prevProps.timer - prevProps.timer) {
+      console.log('timer Id update', this.timerId);
+      clearInterval(this.timerId);
+    }
+  }
+
   componentWillUnmount() {
-    console.log('timer Id', this.timerId);
+    console.log('delete', this.timerId);
     clearInterval(this.timerId);
   }
 

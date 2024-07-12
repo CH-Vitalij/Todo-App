@@ -15,14 +15,6 @@ export default class App extends Component {
     status: 'All',
   };
 
-  // componentDidMount() {
-  //   this.timerID = setInterval(() => this.handleTimer(), 1000);
-  // }
-
-  // componentWillUnmount() {
-  //   clearInterval(this.timerID);
-  // }
-
   createTask = (label) => {
     return {
       label,
@@ -30,7 +22,7 @@ export default class App extends Component {
       done: false,
       edit: false,
       id: crypto.randomUUID(),
-      timer: 0,
+      timer: null,
     };
   };
 
@@ -61,7 +53,7 @@ export default class App extends Component {
     this.setState(({ todoData }) => {
       return {
         todoData: todoData.map((task) => {
-          task = task.id === id ? { ...task, done: !task.done } : task;
+          task = task.id === id ? { ...task, done: !task.done, timer: 0 } : task;
 
           return task;
         }),
