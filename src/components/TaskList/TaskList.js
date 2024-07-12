@@ -8,13 +8,14 @@ export default function TaskList({
   onDeleted = () => {},
   onEdited = () => {},
   onSetLabelChange = () => {},
+  onUpdateTimer = () => {},
 }) {
   const handleLabelChange = (evt, id) => {
     onSetLabelChange(id, evt.target.value);
   };
 
   const handleSubmit = (evt, id) => {
-    if (evt.keyCode === 13 || evt.keyCode == 27) {
+    if (evt.keyCode === 13) {
       onEdited(id, true);
     }
   };
@@ -34,6 +35,7 @@ export default function TaskList({
       <li key={elProps.id} className={className}>
         <Task
           {...elProps}
+          onUpdateTimer={() => onUpdateTimer(elProps.id)}
           onDone={() => onDone(elProps.id)}
           onDeleted={() => onDeleted(elProps.id)}
           onEdited={(id) => {

@@ -15,6 +15,14 @@ export default class App extends Component {
     status: 'All',
   };
 
+  // componentDidMount() {
+  //   this.timerID = setInterval(() => this.handleTimer(), 1000);
+  // }
+
+  // componentWillUnmount() {
+  //   clearInterval(this.timerID);
+  // }
+
   createTask = (label) => {
     return {
       label,
@@ -22,7 +30,19 @@ export default class App extends Component {
       done: false,
       edit: false,
       id: crypto.randomUUID(),
+      timer: 0,
     };
+  };
+
+  handleUpdateTimer = (id) => {
+    this.setState(({ todoData }) => {
+      return {
+        todoData: todoData.map((task) => {
+          task = task.id === id ? { ...task, timer: task.timer + 1 } : task;
+          return task;
+        }),
+      };
+    });
   };
 
   handleAdded = (text) => {
@@ -129,6 +149,7 @@ export default class App extends Component {
             onDeleted={this.handleDeleted}
             onEdited={this.handleEdited}
             onSetLabelChange={this.handleSetLabelChange}
+            onUpdateTimer={this.handleUpdateTimer}
           />
           <Footer
             btn={this.state.buttons}
