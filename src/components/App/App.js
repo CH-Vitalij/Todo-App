@@ -15,36 +15,36 @@ export default class App extends Component {
     status: 'All',
   };
 
-  createTask = (label) => {
+  createTask = (label, min = null, sec = null) => {
     return {
       label,
       creationTime: new Date(),
       done: false,
       edit: false,
       id: crypto.randomUUID(),
-      timer: null,
+      timer: min || sec ? min * 60 + sec : null,
       timerId: null,
     };
   };
 
-  handleUpdateTimer = (id) => {
+  handleUpdateTimer = (id, val) => {
     this.setState(({ todoData }) => {
       return {
         todoData: todoData.map((task) => {
-          task = task.id === id ? { ...task, timer: task.timer + 1 } : task;
+          task = task.id === id ? { ...task, timer: !val ? task.timer + 1 : task.timer - 1 } : task;
           return task;
         }),
       };
     });
   };
 
-  handleStartTimer = (evt, id) => {
+  handleStartTimer = (evt, id, val) => {
     evt.target.disabled = true;
 
     this.setState(({ todoData }) => {
       return {
         todoData: todoData.map((task) => {
-          return task.id === id ? { ...task, timerId: setInterval(() => this.handleUpdateTimer(id), 1000) } : task;
+          return task.id === id ? { ...task, timerId: setInterval(() => this.handleUpdateTimer(id, val), 1000) } : task;
         }),
       };
     });
@@ -60,11 +60,11 @@ export default class App extends Component {
     });
   };
 
-  handleAdded = (text) => {
+  handleAdded = (text, min, sec) => {
     this.setState(({ todoData }) => {
       const newArr = structuredClone(todoData);
 
-      newArr.push(this.createTask(text));
+      newArr.push(this.createTask(text, min, sec));
 
       return {
         todoData: newArr,

@@ -38,7 +38,7 @@ export default function TaskList({
         <Task
           {...elProps}
           onUpdateTimer={() => onUpdateTimer(elProps.id)}
-          onStartTimer={(evt) => onStartTimer(evt, elProps.id)}
+          onStartTimer={(evt, val) => onStartTimer(evt, elProps.id, val)}
           onStopTimer={(evt) => onStopTimer(evt, elProps.id)}
           onDone={() => onDone(elProps.id)}
           onDeleted={() => onDeleted(elProps.id)}

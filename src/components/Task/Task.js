@@ -51,14 +51,14 @@ export default class Task extends Component {
       includeSeconds: true,
       addSuffix: true,
     });
-    // onClick={(evt) => this.handleTimer(evt)}
+
     return (
       <div className="view">
         <input className="toggle" type="checkbox" id={id} onChange={onDone} checked={done} />
         <label htmlFor={id}>
           <span className="title">{label}</span>
           <span className="description">
-            <button className="icon icon-play" onClick={onStartTimer}></button>
+            <button className="icon icon-play" onClick={(evt) => onStartTimer(evt, timer)}></button>
             <button className="icon icon-pause" onClick={onStopTimer}></button>
             {` ${this.updateTimerView(timer)}`}
           </span>
