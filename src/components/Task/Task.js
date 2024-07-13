@@ -10,6 +10,7 @@ export default class Task extends Component {
     id: '',
     timer: null,
     timerId: null,
+    isTimerSet: false,
     onDone: () => {},
     onDeleted: () => {},
     onEdited: () => {},
@@ -45,7 +46,8 @@ export default class Task extends Component {
   }
 
   render() {
-    const { label, creationTime, done, id, timer, onDone, onDeleted, onEdited, onStartTimer, onStopTimer } = this.props;
+    const { label, creationTime, done, id, timer, onDone, onDeleted, onEdited, onStartTimer, onStopTimer, isTimerSet } =
+      this.props;
 
     const formattedDate = formatDistanceToNow(creationTime, {
       includeSeconds: true,
@@ -58,7 +60,7 @@ export default class Task extends Component {
         <label htmlFor={id}>
           <span className="title">{label}</span>
           <span className="description">
-            <button className="icon icon-play" onClick={(evt) => onStartTimer(evt, timer)}></button>
+            <button className="icon icon-play" onClick={(evt) => onStartTimer(evt, isTimerSet)}></button>
             <button className="icon icon-pause" onClick={onStopTimer}></button>
             {` ${this.updateTimerView(timer)}`}
           </span>

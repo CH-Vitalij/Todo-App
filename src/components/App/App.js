@@ -24,6 +24,7 @@ export default class App extends Component {
       id: crypto.randomUUID(),
       timer: min || sec ? min * 60 + sec : null,
       timerId: null,
+      isTimerSet: min || sec ? !!(min * 60 + sec) : !!null,
     };
   };
 
@@ -40,6 +41,8 @@ export default class App extends Component {
 
   handleStartTimer = (evt, id, val) => {
     evt.target.disabled = true;
+
+    console.log('val', val);
 
     this.setState(({ todoData }) => {
       return {
