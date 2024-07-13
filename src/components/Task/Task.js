@@ -29,10 +29,6 @@ export default class Task extends Component {
     onEdited: PropTypes.func,
   };
 
-  updateTimerView = (timer) => {
-    return new Date(timer * 1000).toISOString().slice(11, 19);
-  };
-
   componentDidUpdate(prevProps) {
     if (this.props.timer === prevProps.timer - prevProps.timer) {
       clearInterval(this.props.timerId);
@@ -44,6 +40,10 @@ export default class Task extends Component {
       clearInterval(this.props.timerId);
     }
   }
+
+  updateTimerView = (timer) => {
+    return new Date(timer * 1000).toISOString().slice(11, 19);
+  };
 
   render() {
     const { label, creationTime, done, id, timer, onDone, onDeleted, onEdited, onStartTimer, onStopTimer, isTimerSet } =

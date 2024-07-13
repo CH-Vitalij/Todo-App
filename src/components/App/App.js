@@ -17,14 +17,15 @@ export default class App extends Component {
 
   createTask = (label, min = null, sec = null) => {
     return {
-      label,
+      label: label,
+      initialLabel: label,
       creationTime: new Date(),
       done: false,
       edit: false,
       id: crypto.randomUUID(),
       timer: min || sec ? min * 60 + sec : null,
       timerId: null,
-      isTimerSet: min || sec ? !!(min * 60 + sec) : !!null,
+      isTimerSet: min || sec ? true : false,
     };
   };
 
@@ -41,8 +42,7 @@ export default class App extends Component {
 
   handleStartTimer = (evt, id, val) => {
     evt.target.disabled = true;
-
-    console.log('val', val);
+    evt.target.style.cursor = 'default';
 
     this.setState(({ todoData }) => {
       return {
@@ -55,6 +55,7 @@ export default class App extends Component {
 
   handleStopTimer = (evt, id) => {
     evt.target.previousSibling.disabled = false;
+    evt.target.previousSibling.style.cursor = 'pointer';
 
     this.setState(({ todoData }) => {
       return {
@@ -64,6 +65,8 @@ export default class App extends Component {
   };
 
   handleAdded = (text, min, sec) => {
+    console.log(this.state.initialLabel);
+    console.log(this.state.label);
     this.setState(({ todoData }) => {
       const newArr = structuredClone(todoData);
 
@@ -108,7 +111,9 @@ export default class App extends Component {
   handleSetLabelChange = (id, value) => {
     this.setState(({ todoData }) => {
       return {
-        todoData: todoData.map((task) => (task.id === id ? { ...task, label: value } : task)),
+        todoData: todoData.map((task) =>
+          task.id === id ? { ...task, label: value ? value : task.initialLabel } : task,
+        ),
       };
     });
   };

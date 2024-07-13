@@ -19,6 +19,9 @@ export default function TaskList({
   const handleSubmit = (evt, id) => {
     if (evt.keyCode === 13) {
       onEdited(id, true);
+    } else if (evt.keyCode === 27) {
+      onSetLabelChange(id, null);
+      onEdited(id, true);
     }
   };
 
