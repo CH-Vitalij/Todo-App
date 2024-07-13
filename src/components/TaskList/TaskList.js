@@ -9,6 +9,8 @@ export default function TaskList({
   onEdited = () => {},
   onSetLabelChange = () => {},
   onUpdateTimer = () => {},
+  onStartTimer = () => {},
+  onStopTimer = () => {},
 }) {
   const handleLabelChange = (evt, id) => {
     onSetLabelChange(id, evt.target.value);
@@ -36,6 +38,8 @@ export default function TaskList({
         <Task
           {...elProps}
           onUpdateTimer={() => onUpdateTimer(elProps.id)}
+          onStartTimer={(evt) => onStartTimer(evt, elProps.id)}
+          onStopTimer={(evt) => onStopTimer(evt, elProps.id)}
           onDone={() => onDone(elProps.id)}
           onDeleted={() => onDeleted(elProps.id)}
           onEdited={(id) => {

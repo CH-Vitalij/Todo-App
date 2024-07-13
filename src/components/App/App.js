@@ -23,6 +23,7 @@ export default class App extends Component {
       edit: false,
       id: crypto.randomUUID(),
       timer: null,
+      timerId: null,
     };
   };
 
@@ -33,6 +34,28 @@ export default class App extends Component {
           task = task.id === id ? { ...task, timer: task.timer + 1 } : task;
           return task;
         }),
+      };
+    });
+  };
+
+  handleStartTimer = (evt, id) => {
+    evt.target.disabled = true;
+
+    this.setState(({ todoData }) => {
+      return {
+        todoData: todoData.map((task) => {
+          return task.id === id ? { ...task, timerId: setInterval(() => this.handleUpdateTimer(id), 1000) } : task;
+        }),
+      };
+    });
+  };
+
+  handleStopTimer = (evt, id) => {
+    evt.target.previousSibling.disabled = false;
+
+    this.setState(({ todoData }) => {
+      return {
+        todoData: todoData.map((task) => (task.id === id ? { ...task, timerId: clearInterval(task.timerId) } : task)),
       };
     });
   };
@@ -52,11 +75,7 @@ export default class App extends Component {
   handleDone = (id) => {
     this.setState(({ todoData }) => {
       return {
-        todoData: todoData.map((task) => {
-          task = task.id === id ? { ...task, done: !task.done, timer: 0 } : task;
-
-          return task;
-        }),
+        todoData: todoData.map((task) => (task.id === id ? { ...task, done: !task.done, timer: 0 } : task)),
       };
     });
   };
@@ -86,11 +105,7 @@ export default class App extends Component {
   handleSetLabelChange = (id, value) => {
     this.setState(({ todoData }) => {
       return {
-        todoData: todoData.map((task) => {
-          task = task.id === id ? { ...task, label: value } : task;
-
-          return task;
-        }),
+        todoData: todoData.map((task) => (task.id === id ? { ...task, label: value } : task)),
       };
     });
   };
@@ -106,11 +121,7 @@ export default class App extends Component {
         };
       } else {
         return {
-          todoData: todoData.map((task) => {
-            task = task.id === id ? { ...task, edit: !task.edit } : task;
-
-            return task;
-          }),
+          todoData: todoData.map((task) => (task.id === id ? { ...task, edit: !task.edit } : task)),
         };
       }
     });
@@ -142,6 +153,8 @@ export default class App extends Component {
             onEdited={this.handleEdited}
             onSetLabelChange={this.handleSetLabelChange}
             onUpdateTimer={this.handleUpdateTimer}
+            onStartTimer={this.handleStartTimer}
+            onStopTimer={this.handleStopTimer}
           />
           <Footer
             btn={this.state.buttons}
