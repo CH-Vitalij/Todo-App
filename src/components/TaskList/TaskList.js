@@ -13,14 +13,15 @@ export default function TaskList({
   onStopTimer = () => {},
 }) {
   const handleLabelChange = (evt, id) => {
-    onSetLabelChange(id, evt.target.value);
+    onSetLabelChange(id, evt.target.value, false);
   };
 
   const handleSubmit = (evt, id) => {
     if (evt.keyCode === 13) {
+      onSetLabelChange(id, evt.target.value, true);
       onEdited(id, true);
     } else if (evt.keyCode === 27) {
-      onSetLabelChange(id, null);
+      onSetLabelChange(id, null, false);
       onEdited(id, true);
     }
   };

@@ -65,8 +65,6 @@ export default class App extends Component {
   };
 
   handleAdded = (text, min, sec) => {
-    console.log(this.state.initialLabel);
-    console.log(this.state.label);
     this.setState(({ todoData }) => {
       const newArr = structuredClone(todoData);
 
@@ -108,11 +106,17 @@ export default class App extends Component {
     });
   };
 
-  handleSetLabelChange = (id, value) => {
+  handleSetLabelChange = (id, value, newInitialLabel) => {
     this.setState(({ todoData }) => {
       return {
         todoData: todoData.map((task) =>
-          task.id === id ? { ...task, label: value ? value : task.initialLabel } : task,
+          task.id === id
+            ? {
+                ...task,
+                label: value ? value : task.initialLabel,
+                initialLabel: newInitialLabel ? value : task.initialLabel,
+              }
+            : task,
         ),
       };
     });
