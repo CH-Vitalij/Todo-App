@@ -30,9 +30,10 @@ const App = () => {
   };
 
   const handleUpdateTimer = (id, val) => {
-    setState(({ todoData }) => {
+    setState((prevState) => {
       return {
-        todoData: todoData.map((task) => {
+        ...prevState,
+        todoData: prevState.todoData.map((task) => {
           task = task.id === id ? { ...task, timer: !val ? task.timer + 1 : task.timer - 1 } : task;
           return task;
         }),
@@ -44,9 +45,10 @@ const App = () => {
     evt.target.disabled = true;
     evt.target.style.cursor = 'default';
 
-    setState(({ todoData }) => {
+    setState((prevState) => {
       return {
-        todoData: todoData.map((task) => {
+        ...prevState,
+        todoData: prevState.todoData.map((task) => {
           return task.id === id ? { ...task, timerId: setInterval(() => handleUpdateTimer(id, val), 1000) } : task;
         }),
       };
@@ -65,34 +67,37 @@ const App = () => {
   };
 
   const handleAdded = (text, min, sec) => {
-    setState(({ todoData }) => {
-      const newArr = structuredClone(todoData);
+    setState((prevState) => {
+      const newArr = structuredClone(prevState.todoData);
 
       newArr.push(createTask(text, min, sec));
 
       return {
+        ...prevState,
         todoData: newArr,
       };
     });
   };
 
   const handleDone = (id) => {
-    setState(({ todoData }) => {
+    setState((prevState) => {
       return {
-        todoData: todoData.map((task) => (task.id === id ? { ...task, done: !task.done, timer: 0 } : task)),
+        ...prevState,
+        todoData: prevState.todoData.map((task) => (task.id === id ? { ...task, done: !task.done, timer: 0 } : task)),
       };
     });
   };
 
   const handleDeleted = (id) => {
-    setState(({ todoData }) => {
-      return { todoData: todoData.filter((task) => task.id !== id) };
+    setState((prevState) => {
+      return { ...prevState, todoData: prevState.todoData.filter((task) => task.id !== id) };
     });
   };
 
   const handleSelected = (name) => {
-    setState(({ buttons }) => ({
-      buttons: buttons.map((btn) => ({
+    setState((prevState) => ({
+      ...prevState,
+      buttons: prevState.buttons.map((btn) => ({
         ...btn,
         isActive: btn.name === name,
       })),
@@ -101,15 +106,16 @@ const App = () => {
   };
 
   const handleClear = () => {
-    setState(({ todoData }) => {
-      return { todoData: todoData.filter((el) => !el.done) };
+    setState((prevState) => {
+      return { ...prevState, todoData: prevState.todoData.filter((el) => !el.done) };
     });
   };
 
   const handleSetLabelChange = (id, value, newInitialLabel) => {
-    setState(({ todoData }) => {
+    setState((prevState) => {
       return {
-        todoData: todoData.map((task) =>
+        ...prevState,
+        todoData: prevState.todoData.map((task) =>
           task.id === id
             ? {
                 ...task,
@@ -123,17 +129,19 @@ const App = () => {
   };
 
   const handleEdited = (id, ok = false) => {
-    setState(({ todoData }) => {
+    setState((prevState) => {
       if (!ok) {
         return {
-          todoData: todoData.map((task) => ({
+          ...prevState,
+          todoData: prevState.todoData.map((task) => ({
             ...task,
             edit: task.id === id,
           })),
         };
       } else {
         return {
-          todoData: todoData.map((task) => (task.id === id ? { ...task, edit: !task.edit } : task)),
+          ...prevState,
+          todoData: prevState.todoData.map((task) => (task.id === id ? { ...task, edit: !task.edit } : task)),
         };
       }
     });
