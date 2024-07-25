@@ -1,11 +1,11 @@
-import { Component } from 'react';
+import { useState } from 'react';
 
 import NewTaskForm from '../NewTaskForm';
 import TaskList from '../TaskList';
 import Footer from '../Footer';
 
-export default class App extends Component {
-  state = {
+const App = () => {
+  const [state, setState] = useState({
     todoData: [],
     buttons: [
       { id: crypto.randomUUID(), isActive: true, name: 'All' },
@@ -13,9 +13,9 @@ export default class App extends Component {
       { id: crypto.randomUUID(), isActive: false, name: 'Completed' },
     ],
     status: 'All',
-  };
+  });
 
-  createTask = (label, min = null, sec = null) => {
+  const createTask = (label, min = null, sec = null) => {
     return {
       label: label,
       initialLabel: label,
@@ -29,8 +29,8 @@ export default class App extends Component {
     };
   };
 
-  handleUpdateTimer = (id, val) => {
-    this.setState(({ todoData }) => {
+  const handleUpdateTimer = (id, val) => {
+    setState(({ todoData }) => {
       return {
         todoData: todoData.map((task) => {
           task = task.id === id ? { ...task, timer: !val ? task.timer + 1 : task.timer - 1 } : task;
@@ -40,35 +40,35 @@ export default class App extends Component {
     });
   };
 
-  handleStartTimer = (evt, id, val) => {
+  const handleStartTimer = (evt, id, val) => {
     evt.target.disabled = true;
     evt.target.style.cursor = 'default';
 
-    this.setState(({ todoData }) => {
+    setState(({ todoData }) => {
       return {
         todoData: todoData.map((task) => {
-          return task.id === id ? { ...task, timerId: setInterval(() => this.handleUpdateTimer(id, val), 1000) } : task;
+          return task.id === id ? { ...task, timerId: setInterval(() => handleUpdateTimer(id, val), 1000) } : task;
         }),
       };
     });
   };
 
-  handleStopTimer = (evt, id) => {
+  const handleStopTimer = (evt, id) => {
     evt.target.previousSibling.disabled = false;
     evt.target.previousSibling.style.cursor = 'pointer';
 
-    this.setState(({ todoData }) => {
+    setState(({ todoData }) => {
       return {
         todoData: todoData.map((task) => (task.id === id ? { ...task, timerId: clearInterval(task.timerId) } : task)),
       };
     });
   };
 
-  handleAdded = (text, min, sec) => {
-    this.setState(({ todoData }) => {
+  const handleAdded = (text, min, sec) => {
+    setState(({ todoData }) => {
       const newArr = structuredClone(todoData);
 
-      newArr.push(this.createTask(text, min, sec));
+      newArr.push(createTask(text, min, sec));
 
       return {
         todoData: newArr,
@@ -76,22 +76,22 @@ export default class App extends Component {
     });
   };
 
-  handleDone = (id) => {
-    this.setState(({ todoData }) => {
+  const handleDone = (id) => {
+    setState(({ todoData }) => {
       return {
         todoData: todoData.map((task) => (task.id === id ? { ...task, done: !task.done, timer: 0 } : task)),
       };
     });
   };
 
-  handleDeleted = (id) => {
-    this.setState(({ todoData }) => {
+  const handleDeleted = (id) => {
+    setState(({ todoData }) => {
       return { todoData: todoData.filter((task) => task.id !== id) };
     });
   };
 
-  handleSelected = (name) => {
-    this.setState(({ buttons }) => ({
+  const handleSelected = (name) => {
+    setState(({ buttons }) => ({
       buttons: buttons.map((btn) => ({
         ...btn,
         isActive: btn.name === name,
@@ -100,14 +100,14 @@ export default class App extends Component {
     }));
   };
 
-  handleClear = () => {
-    this.setState(({ todoData }) => {
+  const handleClear = () => {
+    setState(({ todoData }) => {
       return { todoData: todoData.filter((el) => !el.done) };
     });
   };
 
-  handleSetLabelChange = (id, value, newInitialLabel) => {
-    this.setState(({ todoData }) => {
+  const handleSetLabelChange = (id, value, newInitialLabel) => {
+    setState(({ todoData }) => {
       return {
         todoData: todoData.map((task) =>
           task.id === id
@@ -122,8 +122,8 @@ export default class App extends Component {
     });
   };
 
-  handleEdited = (id, ok = false) => {
-    this.setState(({ todoData }) => {
+  const handleEdited = (id, ok = false) => {
+    setState(({ todoData }) => {
       if (!ok) {
         return {
           todoData: todoData.map((task) => ({
@@ -139,43 +139,43 @@ export default class App extends Component {
     });
   };
 
-  getFilteredTasks = () => {
-    switch (this.state.status) {
+  const getFilteredTasks = () => {
+    switch (state.status) {
       case 'Active':
-        return this.state.todoData.filter((task) => !task.done);
+        return state.todoData.filter((task) => !task.done);
       case 'Completed':
-        return this.state.todoData.filter((task) => task.done);
+        return state.todoData.filter((task) => task.done);
       default:
-        return this.state.todoData;
+        return state.todoData;
     }
   };
 
-  render() {
-    return (
-      <>
-        <header className="header">
-          <h1>todos</h1>
-          <NewTaskForm onAdded={this.handleAdded} />
-        </header>
-        <section className="main">
-          <TaskList
-            todos={this.getFilteredTasks()}
-            onDone={this.handleDone}
-            onDeleted={this.handleDeleted}
-            onEdited={this.handleEdited}
-            onSetLabelChange={this.handleSetLabelChange}
-            onUpdateTimer={this.handleUpdateTimer}
-            onStartTimer={this.handleStartTimer}
-            onStopTimer={this.handleStopTimer}
-          />
-          <Footer
-            btn={this.state.buttons}
-            active={this.state.todoData.filter((task) => !task.done)}
-            onSelect={this.handleSelected}
-            onClear={this.handleClear}
-          />
-        </section>
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <header className="header">
+        <h1>todos</h1>
+        <NewTaskForm onAdded={handleAdded} />
+      </header>
+      <section className="main">
+        <TaskList
+          todos={getFilteredTasks()}
+          onDone={handleDone}
+          onDeleted={handleDeleted}
+          onEdited={handleEdited}
+          onSetLabelChange={handleSetLabelChange}
+          onUpdateTimer={handleUpdateTimer}
+          onStartTimer={handleStartTimer}
+          onStopTimer={handleStopTimer}
+        />
+        <Footer
+          btn={state.buttons}
+          active={state.todoData.filter((task) => !task.done)}
+          onSelect={handleSelected}
+          onClear={handleClear}
+        />
+      </section>
+    </>
+  );
+};
+
+export default App;
