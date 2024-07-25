@@ -32,7 +32,6 @@ const App = () => {
   };
 
   const handleUpdateTimer = (id, val) => {
-    console.log('UpdateTimer');
     setState((prevState) => {
       return {
         ...prevState,
