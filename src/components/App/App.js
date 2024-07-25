@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, StrictMode } from 'react';
 
 import NewTaskForm from '../NewTaskForm';
 import TaskList from '../TaskList';
@@ -160,28 +160,30 @@ const App = () => {
 
   return (
     <>
-      <header className="header">
-        <h1>todos</h1>
-        <NewTaskForm onAdded={handleAdded} />
-      </header>
-      <section className="main">
-        <TaskList
-          todos={getFilteredTasks()}
-          onDone={handleDone}
-          onDeleted={handleDeleted}
-          onEdited={handleEdited}
-          onSetLabelChange={handleSetLabelChange}
-          onUpdateTimer={handleUpdateTimer}
-          onStartTimer={handleStartTimer}
-          onStopTimer={handleStopTimer}
-        />
-        <Footer
-          btn={state.buttons}
-          active={state.todoData.filter((task) => !task.done)}
-          onSelect={handleSelected}
-          onClear={handleClear}
-        />
-      </section>
+      <StrictMode>
+        <header className="header">
+          <h1>todos</h1>
+          <NewTaskForm onAdded={handleAdded} />
+        </header>
+        <section className="main">
+          <TaskList
+            todos={getFilteredTasks()}
+            onDone={handleDone}
+            onDeleted={handleDeleted}
+            onEdited={handleEdited}
+            onSetLabelChange={handleSetLabelChange}
+            onUpdateTimer={handleUpdateTimer}
+            onStartTimer={handleStartTimer}
+            onStopTimer={handleStopTimer}
+          />
+          <Footer
+            btn={state.buttons}
+            active={state.todoData.filter((task) => !task.done)}
+            onSelect={handleSelected}
+            onClear={handleClear}
+          />
+        </section>
+      </StrictMode>
     </>
   );
 };

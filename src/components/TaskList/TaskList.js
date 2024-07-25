@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { useRef } from 'react';
 
 import Task from '../Task';
 
@@ -12,6 +13,8 @@ export default function TaskList({
   onStartTimer = () => {},
   onStopTimer = () => {},
 }) {
+  const itemRef = useRef(null);
+
   const handleLabelChange = (evt, id) => {
     onSetLabelChange(id, evt.target.value, false);
   };
@@ -24,6 +27,13 @@ export default function TaskList({
       onSetLabelChange(id, null, false);
       onEdited(id, true);
     }
+  };
+
+  const getMap = () => {
+    if (!itemRef.current) {
+      itemRef.current = new Map();
+    }
+    return itemRef.current;
   };
 
   const elements = todos.map((el) => {
@@ -47,10 +57,9 @@ export default function TaskList({
           onDone={() => onDone(elProps.id)}
           onDeleted={() => onDeleted(elProps.id)}
           onEdited={(id) => {
-            const inputEdit = document.querySelector(`input.edit[data-id="${id}"]`);
-            if (inputEdit) {
+            if (itemRef.current.get(id)) {
               setTimeout(() => {
-                inputEdit.focus();
+                itemRef.current.get(id).focus();
               }, 0);
             }
             onEdited(elProps.id);
@@ -59,7 +68,15 @@ export default function TaskList({
         <input
           type="text"
           className="edit"
-          data-id={elProps.id}
+          ref={(node) => {
+            const map = getMap();
+
+            if (node) {
+              map.set(elProps.id, node);
+            } else {
+              map.delete(elProps.id);
+            }
+          }}
           onChange={(evt) => handleLabelChange(evt, elProps.id)}
           onKeyDown={(evt) => handleSubmit(evt, elProps.id)}
           value={elProps.label}
