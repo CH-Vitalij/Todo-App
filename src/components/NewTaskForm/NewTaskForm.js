@@ -5,7 +5,7 @@ const NewTaskForm = ({ onAdded = () => {} }) => {
   const [state, setState] = useState({ label: '', sec: '', min: '' });
 
   const handleLabelChange = (evt) => {
-    setState({ label: evt.target.value });
+    setState((prevState) => ({ ...prevState, label: evt.target.value }));
   };
 
   const handleSubmit = (evt) => {
@@ -17,13 +17,13 @@ const NewTaskForm = ({ onAdded = () => {} }) => {
 
   const handleSecChange = (evt) => {
     if (!isNaN(evt.target.value)) {
-      setState({ sec: Number(evt.target.value) });
+      setState((prevState) => ({ ...prevState, sec: Number(evt.target.value) }));
     }
   };
 
   const handleMinChange = (evt) => {
     if (!isNaN(evt.target.value)) {
-      setState({ min: Number(evt.target.value) });
+      setState((prevState) => ({ ...prevState, min: Number(evt.target.value) }));
     }
   };
 
