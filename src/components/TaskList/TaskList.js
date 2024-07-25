@@ -1,18 +1,20 @@
 import PropTypes from 'prop-types';
-import { useRef } from 'react';
+import { forwardRef, useRef } from 'react';
 
 import Task from '../Task';
 
-export default function TaskList({
-  todos = [],
-  onDone = () => {},
-  onDeleted = () => {},
-  onEdited = () => {},
-  onSetLabelChange = () => {},
-  onUpdateTimer = () => {},
-  onStartTimer = () => {},
-  onStopTimer = () => {},
-}) {
+const TaskList = forwardRef(function TaskList(
+  {
+    todos = [],
+    onDone = () => {},
+    onDeleted = () => {},
+    onEdited = () => {},
+    onSetLabelChange = () => {},
+    onStartTimer = () => {},
+    onStopTimer = () => {},
+  },
+  btnStartRef,
+) {
   const itemRef = useRef(null);
 
   const handleLabelChange = (evt, id) => {
@@ -51,7 +53,7 @@ export default function TaskList({
       <li key={elProps.id} className={className}>
         <Task
           {...elProps}
-          onUpdateTimer={() => onUpdateTimer(elProps.id)}
+          ref={btnStartRef}
           onStartTimer={(evt, val) => onStartTimer(evt, elProps.id, val)}
           onStopTimer={(evt) => onStopTimer(evt, elProps.id)}
           onDone={() => onDone(elProps.id)}
@@ -86,7 +88,7 @@ export default function TaskList({
   });
 
   return <ul className="todo-list">{elements}</ul>;
-}
+});
 
 TaskList.propTypes = {
   todos: PropTypes.arrayOf(PropTypes.object),
@@ -95,3 +97,5 @@ TaskList.propTypes = {
   onEdited: PropTypes.func.isRequired,
   onSetLabelChange: PropTypes.func.isRequired,
 };
+
+export default TaskList;

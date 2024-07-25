@@ -1,4 +1,4 @@
-import { useState, StrictMode } from 'react';
+import { useState, useRef, StrictMode } from 'react';
 
 import NewTaskForm from '../NewTaskForm';
 import TaskList from '../TaskList';
@@ -15,6 +15,8 @@ const App = () => {
     status: 'All',
   });
 
+  const btnStartRef = useRef(null);
+
   const createTask = (label, min = null, sec = null) => {
     return {
       label: label,
@@ -30,6 +32,7 @@ const App = () => {
   };
 
   const handleUpdateTimer = (id, val) => {
+    console.log('UpdateTimer');
     setState((prevState) => {
       return {
         ...prevState,
@@ -59,9 +62,12 @@ const App = () => {
     evt.target.previousSibling.disabled = false;
     evt.target.previousSibling.style.cursor = 'pointer';
 
-    setState(({ todoData }) => {
+    setState((prevState) => {
       return {
-        todoData: todoData.map((task) => (task.id === id ? { ...task, timerId: clearInterval(task.timerId) } : task)),
+        ...prevState,
+        todoData: prevState.todoData.map((task) =>
+          task.id === id ? { ...task, timerId: clearInterval(task.timerId) } : task,
+        ),
       };
     });
   };
@@ -80,10 +86,15 @@ const App = () => {
   };
 
   const handleDone = (id) => {
+    btnStartRef.current.disabled = false;
+    btnStartRef.current.style.cursor = 'pointer';
+
     setState((prevState) => {
       return {
         ...prevState,
-        todoData: prevState.todoData.map((task) => (task.id === id ? { ...task, done: !task.done, timer: 0 } : task)),
+        todoData: prevState.todoData.map((task) =>
+          task.id === id ? { ...task, done: !task.done, timer: null } : task,
+        ),
       };
     });
   };
@@ -168,11 +179,11 @@ const App = () => {
         <section className="main">
           <TaskList
             todos={getFilteredTasks()}
+            ref={btnStartRef}
             onDone={handleDone}
             onDeleted={handleDeleted}
             onEdited={handleEdited}
             onSetLabelChange={handleSetLabelChange}
-            onUpdateTimer={handleUpdateTimer}
             onStartTimer={handleStartTimer}
             onStopTimer={handleStopTimer}
           />
