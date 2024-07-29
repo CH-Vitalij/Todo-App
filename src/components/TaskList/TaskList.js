@@ -1,20 +1,17 @@
 import PropTypes from 'prop-types';
-import { forwardRef, useRef } from 'react';
+import { useRef } from 'react';
 
 import Task from '../Task';
 
-const TaskList = forwardRef(function TaskList(
-  {
-    todos = [],
-    onDone = () => {},
-    onDeleted = () => {},
-    onEdited = () => {},
-    onSetLabelChange = () => {},
-    onStartTimer = () => {},
-    onStopTimer = () => {},
-  },
-  btnStartRef,
-) {
+const TaskList = ({
+  todos = [],
+  onDone = () => {},
+  onDeleted = () => {},
+  onEdited = () => {},
+  onSetLabelChange = () => {},
+  onStartTimer = () => {},
+  onStopTimer = () => {},
+}) => {
   const itemRef = useRef(null);
 
   const handleLabelChange = (evt, id) => {
@@ -53,7 +50,6 @@ const TaskList = forwardRef(function TaskList(
       <li key={elProps.id} className={className}>
         <Task
           {...elProps}
-          ref={btnStartRef}
           onStartTimer={(evt, val) => onStartTimer(evt, elProps.id, val)}
           onStopTimer={(evt) => onStopTimer(evt, elProps.id)}
           onDone={() => onDone(elProps.id)}
@@ -88,7 +84,7 @@ const TaskList = forwardRef(function TaskList(
   });
 
   return <ul className="todo-list">{elements}</ul>;
-});
+};
 
 TaskList.propTypes = {
   todos: PropTypes.arrayOf(PropTypes.object),

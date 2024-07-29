@@ -1,24 +1,21 @@
 import PropTypes from 'prop-types';
 import { formatDistanceToNow } from 'date-fns';
-import { forwardRef, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
-const Task = forwardRef(function Task(
-  {
-    label = '',
-    creationTime = new Date(),
-    done = false,
-    id = '',
-    timer = null,
-    timerId = null,
-    isTimerSet = false,
-    onDone = () => {},
-    onDeleted = () => {},
-    onEdited = () => {},
-    onStartTimer = () => {},
-    onStopTimer = () => {},
-  },
-  btnStartRef,
-) {
+const Task = ({
+  label = '',
+  creationTime = new Date(),
+  done = false,
+  id = '',
+  timer = null,
+  timerId = null,
+  isTimerSet = false,
+  onDone = () => {},
+  onDeleted = () => {},
+  onEdited = () => {},
+  onStartTimer = () => {},
+  onStopTimer = () => {},
+}) => {
   const wasDeletedTaskRef = useRef(null);
 
   useEffect(() => {
@@ -48,11 +45,7 @@ const Task = forwardRef(function Task(
       <label htmlFor={id}>
         <span className="title">{label}</span>
         <span className="description">
-          <button
-            className="icon icon-play"
-            onClick={(evt) => onStartTimer(evt, isTimerSet)}
-            ref={btnStartRef}
-          ></button>
+          <button className="icon icon-play" onClick={(evt) => onStartTimer(evt, isTimerSet)}></button>
           <button className="icon icon-pause" onClick={onStopTimer}></button>
           {` ${updateTimerView(timer)}`}
         </span>
@@ -68,7 +61,7 @@ const Task = forwardRef(function Task(
       ></button>
     </div>
   );
-});
+};
 
 Task.propTypes = {
   label: PropTypes.string.isRequired,

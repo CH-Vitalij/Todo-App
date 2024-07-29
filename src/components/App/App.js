@@ -1,4 +1,4 @@
-import { useState, useRef, StrictMode } from 'react';
+import { useState, StrictMode } from 'react';
 
 import NewTaskForm from '../NewTaskForm';
 import TaskList from '../TaskList';
@@ -14,8 +14,6 @@ const App = () => {
     ],
     status: 'All',
   });
-
-  const btnStartRef = useRef(null);
 
   const createTask = (label, min = null, sec = null) => {
     return {
@@ -85,14 +83,11 @@ const App = () => {
   };
 
   const handleDone = (id) => {
-    btnStartRef.current.disabled = false;
-    btnStartRef.current.style.cursor = 'pointer';
-
     setState((prevState) => {
       return {
         ...prevState,
         todoData: prevState.todoData.map((task) =>
-          task.id === id ? { ...task, done: !task.done, timer: null } : task,
+          task.id === id ? { ...task, done: !task.done, timer: null, isTimerSet: false } : task,
         ),
       };
     });
@@ -178,7 +173,6 @@ const App = () => {
         <section className="main">
           <TaskList
             todos={getFilteredTasks()}
-            ref={btnStartRef}
             onDone={handleDone}
             onDeleted={handleDeleted}
             onEdited={handleEdited}
