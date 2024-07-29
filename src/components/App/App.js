@@ -41,10 +41,7 @@ const App = () => {
     });
   };
 
-  const handleStartTimer = (evt, id, val) => {
-    evt.target.disabled = true;
-    evt.target.style.cursor = 'default';
-
+  const handleStartTimer = (id, val) => {
     setState((prevState) => {
       return {
         ...prevState,
@@ -55,10 +52,7 @@ const App = () => {
     });
   };
 
-  const handleStopTimer = (evt, id) => {
-    evt.target.previousSibling.disabled = false;
-    evt.target.previousSibling.style.cursor = 'pointer';
-
+  const handleStopTimer = (id) => {
     setState((prevState) => {
       return {
         ...prevState,
@@ -87,7 +81,9 @@ const App = () => {
       return {
         ...prevState,
         todoData: prevState.todoData.map((task) =>
-          task.id === id ? { ...task, done: !task.done, timer: null, isTimerSet: false } : task,
+          task.id === id
+            ? { ...task, done: !task.done, timer: null, isTimerSet: false, timerId: clearInterval(task.timerId) }
+            : task,
         ),
       };
     });

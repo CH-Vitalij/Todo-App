@@ -45,7 +45,12 @@ const Task = ({
       <label htmlFor={id}>
         <span className="title">{label}</span>
         <span className="description">
-          <button className="icon icon-play" onClick={(evt) => onStartTimer(evt, isTimerSet)}></button>
+          <button
+            className="icon icon-play"
+            onClick={() => onStartTimer(isTimerSet)}
+            disabled={done || timerId}
+            style={{ cursor: done || timerId ? 'default' : 'pointer' }}
+          ></button>
           <button className="icon icon-pause" onClick={onStopTimer}></button>
           {` ${updateTimerView(timer)}`}
         </span>

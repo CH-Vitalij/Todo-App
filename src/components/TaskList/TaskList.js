@@ -50,8 +50,8 @@ const TaskList = ({
       <li key={elProps.id} className={className}>
         <Task
           {...elProps}
-          onStartTimer={(evt, val) => onStartTimer(evt, elProps.id, val)}
-          onStopTimer={(evt) => onStopTimer(evt, elProps.id)}
+          onStartTimer={(val) => onStartTimer(elProps.id, val)}
+          onStopTimer={() => onStopTimer(elProps.id)}
           onDone={() => onDone(elProps.id)}
           onDeleted={() => onDeleted(elProps.id)}
           onEdited={(id) => {
